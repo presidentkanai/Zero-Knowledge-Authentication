@@ -1,0 +1,25 @@
+pragma circom 2.1.0;
+
+// circomlibから比較用回路（IsEqual）をインポート
+include "./node_modules/circomlib/circuits/comparators.circom";
+
+template VerifyOwnerName() {
+    // Private Inputs（検証者やサーバーには絶対に見せない秘密のハッシュ値）
+    signal input myNameHash;
+    signal input ownerNameHash;
+
+    // Output（1: 一致, 0: 不一致）
+    signal output isValid;
+
+    // 2つの入力値が等しいかを判定するコンポーネント
+    component isEq = IsEqual();
+    isEq.in[0] <== myNameHash;
+    isEq.in[1] <== ownerNameHash;
+
+    isValid <== isEq.out;
+
+    // 一致していること（isValid == 1）を数学的制約として強制
+    isValid === 1;
+}
+
+component main = VerifyOwnerName();

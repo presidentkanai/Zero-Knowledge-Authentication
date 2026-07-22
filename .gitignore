@@ -1,0 +1,7 @@
+node_modules/
+*.r1cs
+*.sym
+*.ptau
+*.zkey
+owner_verifier_js/
+.DS_Store
